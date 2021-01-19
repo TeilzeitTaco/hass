@@ -52,11 +52,15 @@ def get_hostnames(session: Session) -> list:
 def show_hostnames(hostnames: list) -> None:
     print("[+]: Fetched hostnames:")
     for hostname in hostnames:
-        print(f"[+]: * Hostname: \"{hostname['hostname']}\"")
+        print(f"[+]:  * Hostname targeting \"{hostname['target']}\": \"{hostname['hostname']}\", " +
+              f"expiring soon: {hostname['is_expiring_soon']}: " +
+              f"{hostname['days_remaining']} days, {hostname['hours_remaining']} hours remaining.")
 
 
 def renew_hostnames(hostnames: list) -> None:
-    pass
+    print("[+]: Renewing hostnames:")
+    for hostname in filter(lambda e: e["is_expiring_soon"], hostnames):
+        print(f"[+]: * Renewing: \"{hostname['hostname']}\"")
 
 
 def main() -> None:
