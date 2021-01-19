@@ -67,10 +67,13 @@ def renew_hostnames(hostnames: list) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="HASS - NoIP Hostname Automation System Script")
+    parser = argparse.ArgumentParser(description="HASS - NoIP Hostname Automation System Script",
+                                     epilog="Developed 2020 by Flesh-Network developers.")
+
     parser.add_argument("-u", "--username", required=True, type=str, help="The username of the NoIP account")
     parser.add_argument("-p", "--password", required=True, type=str, help="The password of the NoIP account")
     parser.add_argument("-j", "--jitter", action="store_true", help="Add a random delay to avoid detection")
+
     parsed_args = parser.parse_args()
 
     if parsed_args.jitter:
