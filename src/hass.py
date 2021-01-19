@@ -1,5 +1,8 @@
 import re
 import sys
+import time
+import random
+import argparse
 
 from requests import Session
 
@@ -64,8 +67,19 @@ def renew_hostnames(hostnames: list) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="HASS - NoIP Automation")
+    parser.add_argument("-u", "--username", required=True, type=str, help="The name of the NoIP account")
+    parser.add_argument("-p", "--password", required=True, type=str, help="The password of the NoIP account")
+    parser.add_argument("-j", "--jitter", action="store_true", help="Add a random delay")
+    parsed_args = parser.parse_args()
+
+    if parsed_args.jitter:
+        jitter_minutes = random.randint(1, 60)
+        print(f"[+]: Jittering for {jitter_minutes} minutes...")
+        time.sleep(jitter_minutes * 60)
+
     print("[+]: Starting No-IP scraper...")
-    session = login("username", "password!")
+    session = login(parsed_args.username, parsed_args.password)
     hostnames = get_hostnames(session)
     show_hostnames(hostnames)
     renew_hostnames(hostnames)
