@@ -22,7 +22,7 @@ def login(username: str, password: str) -> Session:
     token_response = session.get(LOGIN_URL)
     token = LOGIN_TOKEN_EXTRACTOR.search(token_response.text).group(1)
 
-    print(f"[+]: Extracted token \"{token}\"")
+    print(f"[+]: Extracted token \"{token}\".")
     print(f"[+]: Logging in as \"{username}\"...")
     login_response = session.post(LOGIN_URL, data={
         "username": username,
@@ -48,7 +48,7 @@ def get_hostnames(session: Session) -> list:
     # We get an "Unauthorized" without this and I hate it.
     session.headers["X-Requested-With"] = "XMLHttpRequest"
 
-    hostname_response = session.get("https://my.noip.com/api/host")
+    hostname_response = session.get(HOSTNAME_LIST_URL)
     return hostname_response.json()["hosts"]
 
 
