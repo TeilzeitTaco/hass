@@ -62,10 +62,18 @@ def show_hostnames(hostnames: list) -> None:
               f"{hostname['days_remaining']} days, {hostname['hours_remaining']} hours remaining.")
 
 
-def renew_hostnames(hostnames: list) -> None:
+def renew_hostnames(session: Session, hostnames: list) -> None:
+    hostnames_to_renew = filter(lambda e: e["is_expiring_soon"], hostnames)
+
+    if not hostnames_to_renew:
+        print("[+]: No hostnames to renew!")
+        return
+
     print("[+]: Renewing hostnames:")
-    for hostname in filter(lambda e: e["is_expiring_soon"], hostnames):
+    for hostname in hostnames_to_renew:
         print(f"[+]: * Renewing: \"{hostname['hostname']}\"")
+        session.get("")
+        # TODO: Implement!
 
 
 def main() -> None:
@@ -87,7 +95,9 @@ def main() -> None:
     session = login(parsed_args.username, parsed_args.password)
     hostnames = get_hostnames(session)
     show_hostnames(hostnames)
-    renew_hostnames(hostnames)
+    renew_hostnames(session, hostnames)
+
+    print("[+]: Closing session, all done!")
     session.close()
 
 
