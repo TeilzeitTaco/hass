@@ -63,7 +63,7 @@ def show_hostnames(hostnames: list) -> None:
 
 
 def renew_hostnames(session: Session, hostnames: list) -> None:
-    hostnames_to_renew = filter(lambda e: e["is_expiring_soon"], hostnames)
+    hostnames_to_renew = [name for name in hostnames if name["is_expiring_soon"]]
 
     if not hostnames_to_renew:
         print("[+]: No hostnames to renew!")
