@@ -18,7 +18,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../README.md" />
   </component>
   <component name="RunManager">
     <configuration name="run script" type="PythonConfigurationType" factoryName="Python">
@@ -59,10 +59,10 @@
       <screen x="0" y="0" width="1437" height="864" />
     </state>
     <state x="174" y="87" width="1089" height="713" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1437.864@0.0.1437.864" timestamp="1611059277096" />
-    <state x="499" y="199" key="FileChooserDialogImpl" timestamp="1611072633079">
+    <state x="499" y="199" key="FileChooserDialogImpl" timestamp="1611130091987">
       <screen x="0" y="0" width="1437" height="864" />
     </state>
-    <state x="499" y="199" key="FileChooserDialogImpl/0.0.1437.864@0.0.1437.864" timestamp="1611072633079" />
+    <state x="499" y="199" key="FileChooserDialogImpl/0.0.1437.864@0.0.1437.864" timestamp="1611130091987" />
     <state width="1416" height="170" key="GridCell.Tab.0.bottom" timestamp="1611072635072">
       <screen x="0" y="0" width="1437" height="864" />
     </state>
