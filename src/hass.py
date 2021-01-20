@@ -92,13 +92,11 @@ def main() -> None:
         time.sleep(jitter_minutes * 60)
 
     print("[+]: Starting No-IP scraper...")
-    session = login(parsed_args.username, parsed_args.password)
-    hostnames = get_hostnames(session)
-    show_hostnames(hostnames)
-    renew_hostnames(session, hostnames)
-
-    print("[+]: Closing session, all done!")
-    session.close()
+    with login(parsed_args.username, parsed_args.password) as session:
+        hostnames = get_hostnames(session)
+        show_hostnames(hostnames)
+        renew_hostnames(session, hostnames)
+        print("[+]: Closing session, all done!")
 
 
 if __name__ == "__main__":
