@@ -5,7 +5,7 @@ from datetime import datetime
 from itertools import cycle
 
 import requests
-from requests import Session
+from requests import Session, RequestException
 
 from misc import pos, neg
 
@@ -28,8 +28,14 @@ class IPGetter:
 
     def __call__(self) -> str:
         url, func = next(self.__services)
-        with requests.get(url) as rsp:
-            return func(rsp)
+
+        try:
+            with requests.get(url) as rsp:
+                return func(rsp)
+
+        except RequestException:
+            neg(f"Error connecting to \"{url}\"!")
+            return self()
 
 
 def ddns_set_hostnames(session: Session, hostname_names: list, ip: str) -> None:
