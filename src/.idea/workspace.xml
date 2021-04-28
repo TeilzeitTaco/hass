@@ -18,7 +18,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ocdm/neon-kybalion/views/query_view.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration name="run script" type="PythonConfigurationType" factoryName="Python">
@@ -79,5 +79,9 @@
       <screen x="0" y="0" width="1437" height="864" />
     </state>
     <state width="1416" height="170" key="GridCell.Tab.0.right/0.0.1437.864@0.0.1437.864" timestamp="1611072635072" />
+    <state x="429" y="165" width="579" height="534" key="find.popup" timestamp="1619604907728">
+      <screen x="0" y="0" width="1437" height="864" />
+    </state>
+    <state x="429" y="165" width="579" height="534" key="find.popup/0.0.1437.864@0.0.1437.864" timestamp="1619604907728" />
   </component>
 </project>
