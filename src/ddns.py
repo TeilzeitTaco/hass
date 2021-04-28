@@ -31,7 +31,18 @@ class IPGetter:
 
         try:
             with requests.get(url) as rsp:
-                return func(rsp)
+                if rsp.status_code != 200:
+                    neg(f"Error! Response code {rsp.status_code} from \"{url}\"!")
+                    return self()
+
+                # There is at least one service that occasionally gives
+                # an error html page. Do some error checking.
+                ip: str = func(rsp)
+                if not ip.replace(".", "").isdecimal():
+                    neg(f"Error parsing output from \"{url}\"!")
+                    return self()
+
+                return ip
 
         except RequestException:
             neg(f"Error connecting to \"{url}\"!")
