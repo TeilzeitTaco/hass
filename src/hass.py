@@ -8,6 +8,9 @@ import argparse
 
 from requests import Session
 
+from ddns import simulate_ddns_router
+from misc import pos, neg
+
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 " \
              "Safari/537.36 Edg/90.0.818.49 "
 
@@ -36,8 +39,14 @@ def main() -> None:
     parser.add_argument("password", type=str, help="the password of the NoIP account")
 
     action_group = parser.add_mutually_exclusive_group()
-    action_group.add_argument("-r", "--renew", action="store_true")
-    action_group.add_argument("-u", "--update", type=str, help="the hostname to update")
+    action_group.add_argument("-r", "--renew", action="store_true",
+                              help="simulate website access to renew all hostnames")
+
+    action_group.add_argument("-u", "--update", type=str,
+                              help="simulate website access to update hostname")
+
+    action_group.add_argument("-l", "--loop", type=str, nargs="+",
+                              help="simulate a ddns router for all hostnames")
 
     parser.add_argument("-j", "--jitter", action="store_true", help="add a random delay to avoid detection")
     parser.add_argument("-a", "--address", type=str, help="the ip to update the hostname with",
@@ -60,6 +69,9 @@ def main() -> None:
 
         elif parsed_args.update:
             update_hostname(session, hostnames, parsed_args.update, parsed_args.address)
+
+        elif parsed_args.loop:
+            simulate_ddns_router(session, parsed_args.loop, hostnames)
 
         pos("Closing session, all done!")
 
@@ -150,14 +162,6 @@ def update_hostname(session: Session, hostnames: list, target_hostname_name: str
 
     else:
         neg("Failure.")
-
-
-def pos(message: str) -> None:
-    print("[+]: " + message)
-
-
-def neg(message: str) -> None:
-    print("[-]: " + message)
 
 
 if __name__ == "__main__":
