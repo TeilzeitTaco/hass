@@ -29,3 +29,9 @@ optional arguments:
 
 Developed 2020 - 2021 by Flesh-Network developers.
 ```
+
+## How to simulate a DDNS router?
+
+```
+hass.py <username> <password> --loop domain1.ddns.net domain2.ddns.net
+```
