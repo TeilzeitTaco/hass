@@ -32,10 +32,11 @@ class IPGetter:
             return func(rsp)
 
 
-def ddns_set_hostname(session: Session, hostname_name: str, ip: str) -> None:
-    pos(f"({datetime.now()}) Updating hostname \"{hostname_name}\" to point to \"{ip}\".")
-    url = URL_DDNS_UPDATE % (hostname_name, ip)
-    session.get(url)
+def ddns_set_hostnames(session: Session, hostname_names: list, ip: str) -> None:
+    pos(f"({datetime.now()}) Updating hostnames {hostname_names} to point to \"{ip}\".")
+    url = URL_DDNS_UPDATE % (",".join(hostname_names), ip)
+    if (rsp := session.get(url)).status_code != 200:
+        neg(f"Error {rsp.status_code}")
 
 
 def verify_hostnames_exist(hostname_names: list, hostnames: list) -> None:
@@ -50,12 +51,15 @@ def simulate_ddns_router(session: Session, hostname_names: list, hostnames: list
     get_ip = IPGetter()
     old_ip = None
 
+    # Break the update sometimes
+    del session.headers["X-Requested-With"]
+    del session.headers["X-CSRF-TOKEN"]
+    del session.headers["Referer"]
+    del session.headers["Origin"]
+
     pos("Entering DDNS loop.")
     while True:
-        time.sleep(random.randint(10, 60))
-        if (new_ip := get_ip()) == old_ip:
-            continue
-
-        old_ip = new_ip
-        for hostname_name in hostname_names:
-            ddns_set_hostname(session, hostname_name, new_ip)
+        time.sleep(random.randint(20, 80))
+        if (new_ip := get_ip()) != old_ip:
+            old_ip = new_ip
+            ddns_set_hostnames(session, hostname_names, new_ip)
