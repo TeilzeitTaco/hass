@@ -83,11 +83,14 @@ def login(username: str, password: str) -> Session:
     token_response = session.get(URL_LOGIN_PAGE)
     token = EXTRACTOR_LOGIN_TOKEN.search(token_response.text).group(1)
 
+    # FIXME: I think this broke because they now require a captcha
+
     pos(f"Extracted login token \"{token}\".")
     pos(f"Logging in as \"{username}\"...")
     login_response = session.post(URL_LOGIN_PAGE, data={
         "username": username,
         "password": password,
+        "submit_login_page": "1",
         "_token": token,
     })
 
